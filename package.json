@@ -1,0 +1,15 @@
+{
+  "name": "homework5",
+  "version": "0.0.1",
+  "author": "karataev",
+  "license": "MIT",
+  "scripts": {
+    "server": "nodemon server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
