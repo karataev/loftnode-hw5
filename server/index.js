@@ -1,16 +1,15 @@
 const path = require('path');
 const express = require('express');
-
-const router = express.Router();
+const bodyParser = require('body-parser');
 
 let app = express();
 
-app.use(router);
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
 app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use('/', require('./routes'));
 
-router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
-});
 
 const PORT = 8080;
 app.listen(PORT, () => {
