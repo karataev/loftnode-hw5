@@ -25,6 +25,9 @@ const UserSchema = new Schema({
   surName: {
     type: String,
   },
+  permission: {
+    type: Object,
+  }
 });
 
 UserSchema.methods.isValidPassword = function(password) {

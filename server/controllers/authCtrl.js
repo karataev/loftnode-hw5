@@ -14,6 +14,8 @@ function login(req, res, next) {
       let userRes = {
         access_token: user.access_token,
         username: user.username,
+        permissionId: 'wtf',
+        permission: user.permission,
       };
       res.json(userRes);
     });
