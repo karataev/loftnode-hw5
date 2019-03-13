@@ -4,19 +4,17 @@ const passport = require('passport');
 const User = mongoose.model('user');
 
 function login(req, res, next) {
-  let body = JSON.parse(req.body);
-  const {username, password} = req.body;
+  req.body = JSON.parse(req.body);
   passport.authenticate('local', (err, user, info) => {
-    console.log('z', err, user);
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.redirect('/');
-    }
+    if (err) return next(err);
+    if (!user) return res.redirect('/');
     req.logIn(user, err => {
       if (err) next(err);
-      return res.redirect('/profile');
+      let userRes = {
+        access_token: user.token,
+        username: user.username,
+      };
+      res.json(userRes);
     });
   })(req, res, next);
 

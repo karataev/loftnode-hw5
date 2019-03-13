@@ -24,18 +24,13 @@ passport.use(
       passReqToCallback: true,
     },
     function(req, username, password, done) {
-      console.log('here', username, password);
       User.findOne({ username })
         .then(user => {
           if (!user) {
             return done(null, false, req.flash('message', 'User not found'));
           }
-          if (!user.validPassword(password)) {
-            return done(
-              null,
-              false,
-              req.flash('message', 'Incorrect password')
-            );
+          if (!user.isValidPassword(password)) {
+            return done(null, false, req.flash('message', 'Incorrect password'));
           }
           return done(null, user);
         })
