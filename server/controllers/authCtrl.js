@@ -4,6 +4,14 @@ const uuidv4 = require('uuid/v4');
 
 const User = mongoose.model('user');
 
+function setTokenCookie(token, res) {
+  res.cookie('access_token', token, {
+    maxAge: 7 * 60 * 60 * 1000,
+    path: '/',
+    httpOnly: true,
+  });
+}
+
 function login(req, res, next) {
   req.body = JSON.parse(req.body);
   passport.authenticate('local', (err, user, info) => {
@@ -11,6 +19,7 @@ function login(req, res, next) {
     if (!user) return res.redirect('/');
     req.logIn(user, err => {
       if (err) next(err);
+      setTokenCookie(user.access_token, res);
       let userRes = {
         access_token: user.access_token,
         username: user.username,
@@ -44,6 +53,8 @@ function register(req, res, next) {
       newUser
         .save()
         .then(user => {
+          setTokenCookie(token, res);
+
           req.logIn(user, err => {
             if (err) return next(err);
             res.json(newUser);
@@ -54,7 +65,12 @@ function register(req, res, next) {
   });
 }
 
+function authFromToken(token) {
+  console.log('TODO: AUTH FROM TOKEN!!');
+}
+
 module.exports = {
   login,
   register,
+  authFromToken,
 };
