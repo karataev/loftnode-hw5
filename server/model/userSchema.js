@@ -13,7 +13,16 @@ const UserSchema = new Schema({
     type: String,
     required: [true, 'Password required'],
   },
-  token: {
+  access_token: {
+    type: String,
+  },
+  firstName: {
+    type: String,
+  },
+  middleName: {
+    type: String,
+  },
+  surName: {
     type: String,
   },
 });
@@ -27,7 +36,7 @@ UserSchema.methods.setPassword = function(password) {
 };
 
 UserSchema.methods.setToken = function(token) {
-  this.token = token;
+  this.access_token = token;
 };
 
 module.exports = UserSchema;

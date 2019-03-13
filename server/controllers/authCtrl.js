@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
+const uuidv4 = require('uuid/v4');
 
 const User = mongoose.model('user');
 
@@ -11,7 +12,7 @@ function login(req, res, next) {
     req.logIn(user, err => {
       if (err) next(err);
       let userRes = {
-        access_token: user.token,
+        access_token: user.access_token,
         username: user.username,
       };
       res.json(userRes);
@@ -22,24 +23,28 @@ function login(req, res, next) {
 
 function register(req, res, next) {
   let body = JSON.parse(req.body);
-  const { username, password } = body;
-  console.log('!!', body);
 
-  User.findOne({ username }).then(user => {
-    console.log('user?', user);
+  User.findOne({ username: body.username }).then(user => {
     if (user) {
-      // req.flash('message', 'Пользователь с таким email уже существует');
-      res.redirect('/');
+      res.json({
+        error: 'Пользователь уже существует',
+      })
     } else {
       const newUser = new User();
-      newUser.username = username;
-      newUser.setPassword(password);
+      newUser.username = body.username;
+      newUser.firstName = body.firstName;
+      newUser.surName = body.surName;
+      newUser.middleName = body.middleName;
+      newUser.permission = body.permission;
+      const token = uuidv4();
+      newUser.setToken(token);
+      newUser.setPassword(body.password);
       newUser
         .save()
         .then(user => {
           req.logIn(user, err => {
-            if (err) next(err);
-            return res.redirect('/');
+            if (err) return next(err);
+            res.json(newUser);
           });
         })
         .catch(next);
