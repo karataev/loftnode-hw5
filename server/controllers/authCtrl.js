@@ -21,8 +21,12 @@ function login(req, res, next) {
       if (err) next(err);
       setTokenCookie(user.access_token, res);
       let userRes = {
+        id: user.id,
         access_token: user.access_token,
         username: user.username,
+        firstName: user.firstName,
+        middleName: user.middleName,
+        surName: user.surName,
         permissionId: 'wtf',
         permission: user.permission,
       };

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const authCtrl = require('./controllers/authCtrl');
 const newsCtrl = require('./controllers/newsCtrl');
+const userCtrl = require('./controllers/userCtrl');
 const User = mongoose.model('user');
 
 /*
@@ -32,6 +33,6 @@ router.post('/api/saveNewUser', authCtrl.register);
 router.post('/api/authFromToken', authCtrl.authFromToken);
 router.get('/api/getNews', newsCtrl.getAll);
 router.post('/api/newNews', newsCtrl.add);
-
+router.put('/api/updateUser/:id', userCtrl.update);
 
 module.exports = router;

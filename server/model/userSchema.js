@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bCrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
+const utils = require('./utils');
 
 const UserSchema = new Schema({
   username: {
@@ -35,7 +36,7 @@ UserSchema.methods.isValidPassword = function(password) {
 };
 
 UserSchema.methods.setPassword = function(password) {
-  this.hash = bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+  this.hash = utils.generateHash(password);
 };
 
 UserSchema.methods.setToken = function(token) {
