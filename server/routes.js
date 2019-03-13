@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 
-const auth = require('./model/auth');
 const authCtrl = require('./controllers/authCtrl');
 
 router.get('/', (req, res) => {
