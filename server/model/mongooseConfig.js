@@ -25,6 +25,7 @@ function addListeners() {
 
 function registerSchemas() {
   mongoose.model('user', require('./userSchema'));
+  mongoose.model('news', require('./newsSchema'));
 }
 
 function init() {

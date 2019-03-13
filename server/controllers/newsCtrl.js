@@ -1,19 +1,25 @@
+const mongoose = require('mongoose');
+
+const News = mongoose.model('news');
 
 function add(req, res, next) {
-  res.json({TODO: 'add news'});
+  const newItem = new News();
+  newItem.text = 'foo bar';
+  newItem.theme = 'theme';
+  newItem.user = {
+    image: null,
+  };
+  newItem
+    .save()
+    .then(result => {
+      res.json(result);
+    })
 }
 
 function getAll(req, res, next) {
-  res.json([{
-    id: 1,
-    text: 'news one',
-    theme: 'theme',
-    date: 'date',
-    user: {
-      firstName: 'first',
-      image: null,
-    },
-  }]);
+  News.find({}, (err, news) => {
+    res.json(news);
+  });
 }
 
 module.exports = {
