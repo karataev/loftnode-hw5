@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = new mongoose.Schema({
+let newsSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
@@ -15,4 +15,6 @@ module.exports = new mongoose.Schema({
     type: Object,
   }
 });
+
+module.exports = newsSchema;
 
