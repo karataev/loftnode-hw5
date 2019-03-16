@@ -40,5 +40,6 @@ router.delete('/api/deleteNews/:id', newsCtrl.removeItem);
 router.get('/api/getUsers', userCtrl.getAll);
 router.put('/api/updateUser/:id', userCtrl.update);
 router.delete('/api/deleteUser/:id', userCtrl.remove);
+router.put('/api/updateUserPermission/:id', userCtrl.updateUserPermissions);
 
 module.exports = router;

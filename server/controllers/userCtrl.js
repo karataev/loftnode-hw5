@@ -28,8 +28,19 @@ function remove(req, res, next) {
   });
 }
 
+function updateUserPermissions(req, res, next) {
+  let userId = req.params.id;
+  let params = JSON.parse(req.body);
+  User.findOneAndUpdate({_id: userId}, params, (err, user) => {
+    if (err) return next();
+    res.json(user);
+  })
+
+}
+
 module.exports = {
   update,
   getAll,
   remove,
+  updateUserPermissions,
 };
