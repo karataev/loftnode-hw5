@@ -15,6 +15,21 @@ function update(req, res, next) {
   })
 }
 
+function getAll(req, res, next) {
+  User.find({}, (err, users) => {
+    res.json(users);
+  })
+}
+
+function remove(req, res, next) {
+  let id = req.params.id;
+  User.findOneAndDelete({_id: id}, () => {
+    res.json({result: 'ok'});
+  });
+}
+
 module.exports = {
   update,
+  getAll,
+  remove,
 };
