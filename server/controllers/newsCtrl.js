@@ -15,29 +15,20 @@ function addItem(req, res, next) {
     newItem
       .save()
       .then(result => {
-        returnAllNews(res);
+        News.find({}, (err, news) => res.json(news));
       });
   });
 
 }
 
-function returnAllNews(res) {
-  News.find({}, (err, news) => {
-    // TODO: рефакторинг. как по-человечески вернуть id вместо _id?
-    let items = JSON.parse(JSON.stringify(news));
-    items.forEach(item => item.id = item._id);
-    res.json(items);
-  });
-}
-
 function getAll(req, res, next) {
-    returnAllNews(res);
+  News.find({}, (err, news) => res.json(news));
 }
 
 function removeItem(req, res, next) {
   let newsId = req.params.id;
   News.findOneAndDelete(newsId, () => {
-    returnAllNews(res);
+    News.find({}, (err, news) => res.json(news));
   });
 }
 
@@ -45,7 +36,7 @@ function updateItem(req, res, next) {
   let newsId = req.params.id;
   let data = JSON.parse(req.body);
   News.findOneAndUpdate(newsId, data, () => {
-    returnAllNews(res);
+    News.find({}, (err, news) => res.json(news));
   })
 }
 
