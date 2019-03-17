@@ -26,7 +26,36 @@ app.use(express.static(path.join(__dirname, '..', 'dist')));
 
 mongooseConfig.connect();
 
+const http = require('http');
+const server = http.createServer(app);
+
+const io = require('socket.io').listen(server);
+
 const PORT = 8080;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Listen port ${PORT}`);
+});
+
+const clients = {};
+
+io.on('connection', socket => {
+  const id = socket.id;
+  const user = {
+    username: socket.handshake.headers.username,
+    id,
+  };
+  clients[id] = user;
+  socket.broadcast.emit('new user', user);
+  socket.emit('all users', clients);
+
+  socket.on('chat message', (data, userId) => {
+    if (userId !== socket.id) {
+      io.sockets.connected[userId].emit('chat message', data, socket.id);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    delete clients[id];
+    socket.broadcast.emit('delete user', id);
+  });
 });
