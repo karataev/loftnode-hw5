@@ -27,7 +27,6 @@ function login(req, res, next) {
         firstName: user.firstName,
         middleName: user.middleName,
         surName: user.surName,
-        permissionId: 'wtf',
         permission: user.permission,
       };
       res.json(userRes);
