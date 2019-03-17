@@ -28,6 +28,9 @@ const UserSchema = new Schema({
   },
   permission: {
     type: Object,
+  },
+  image: {
+    type: String,
   }
 });
 

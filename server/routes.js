@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const authCtrl = require('./controllers/authCtrl');
 const newsCtrl = require('./controllers/newsCtrl');
 const userCtrl = require('./controllers/userCtrl');
+const saveUserImgCtrl = require('./controllers/saveUserImgCtrl');
 const User = mongoose.model('user');
 
 /*
@@ -66,5 +67,6 @@ router.get('/api/getUsers', userCtrl.getAll);
 router.put('/api/updateUser/:id', userCtrl.update);
 router.delete('/api/deleteUser/:id', userCtrl.remove);
 router.put('/api/updateUserPermission/:id', userCtrl.updateUserPermissions);
+router.post('/api/saveUserImage/:id', saveUserImgCtrl);
 
 module.exports = router;
