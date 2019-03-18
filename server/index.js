@@ -31,7 +31,7 @@ const server = http.createServer(app);
 
 const io = require('socket.io').listen(server);
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`Listen port ${PORT}`);
 });
